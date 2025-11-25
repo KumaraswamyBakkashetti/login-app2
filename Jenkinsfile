@@ -22,27 +22,10 @@ pipeline {
 
     post {
         success {
-            emailext(
-                subject: "SUCCESS: Login App Deployment #${env.BUILD_NUMBER}",
-                body: """
-                <h2 style='color:green;'>✔ Deployment Successful</h2>
-                <p>Project: ${env.JOB_NAME}</p>
-                <p><a href='${env.BUILD_URL}'>View Build</a></p>
-                """,
-                mimeType: 'text/html; charset=UTF-8',
-                to: "kumaraswamybakkashetti@gmail.com"
-            )
+            echo 'build success'
         }
         failure {
-            emailext(
-                subject: "FAILED: Login App Deployment #${env.BUILD_NUMBER}",
-                body: """
-                <h2 style='color:red;'>❌ Deployment Failed</h2>
-                <p><a href='${env.BUILD_URL}console'>Check Logs</a></p>
-                """,
-                mimeType: 'text/html; charset=UTF-8',
-                to: "kumaraswamybakkashetti@gmail.com"
-            )
+            echo 'build failure'
         }
     }
 }
