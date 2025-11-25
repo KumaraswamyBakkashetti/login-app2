@@ -21,35 +21,39 @@ pipeline {
     }
 
     post {
-        success {
-            emailext(
-                mimeType: 'text/html; charset=UTF-8',
-                subject: "SUCCESS: Login App Deployment #${env.BUILD_NUMBER}",
-                body: """
-                <h2 style='color:green;'>✔ Deployment Successful</h2>
-                <p><b>Project:</b> ${env.JOB_NAME}</p>
-                <p><b>Build Number:</b> #${env.BUILD_NUMBER}</p>
-                <p><b>Status:</b> SUCCESS</p>
-                <p><a href='${env.BUILD_URL}'>View Build Details</a></p>
-                <p>UTF-8 Test: Hello 🌍 — नमस्ते — こんにちは — مرحبا — 🙂</p>
-                """,
-                to: "kumaraswamybakkashetti@gmail.com"
-            )
-        }
-        failure {
-            emailext(
-                mimeType: 'text/html; charset=UTF-8',
-                subject: "FAILED: Login App Deployment #${env.BUILD_NUMBER}",
-                body: """
-                <h2 style='color:red;'>❌ Deployment Failed</h2>
-                <p><b>Project:</b> ${env.JOB_NAME}</p>
-                <p><b>Status:</b> FAILURE</p>
-                <p>Please check logs here:</p>
-                <p><a href='${env.BUILD_URL}console'>Console Log</a></p>
-                <p>UTF-8 Test: 😕⚠️</p>
-                """,
-                to: "kumaraswamybakkashetti@gmail.com"
-            )
-        }
+    success {
+        emailext(
+            subject: "SUCCESS: Login App Deployment #${env.BUILD_NUMBER}",
+            body: """
+            <h2 style='color:green;'>✔ Deployment Successful</h2>
+            <p><b>Project:</b> ${env.JOB_NAME}</p>
+            <p><a href='${env.BUILD_URL}'>View Build Details</a></p>
+            """,
+            mimeType: 'text/html; charset=UTF-8',
+            to: "kumaraswamybakkashetti@gmail.com",
+            replyTo: "",
+            from: "kumaraswamybakkashetti@gmail.com",
+            smtpHost: "smtp.gmail.com",
+            smtpPort: "587",
+            useTls: true
+        )
     }
+    failure {
+        emailext(
+            subject: "FAILED: Login App Deployment #${env.BUILD_NUMBER}",
+            body: """
+            <h2 style='color:red;'>❌ Deployment Failed</h2>
+            <p><a href='${env.BUILD_URL}console'>Open Console Log</a></p>
+            """,
+            mimeType: 'text/html; charset=UTF-8',
+            to: "kumaraswamybakkashetti@gmail.com",
+            replyTo: "",
+            from: "kumaraswamybakkashetti@gmail.com",
+            smtpHost: "smtp.gmail.com",
+            smtpPort: "587",
+            useTls: true
+        )
+    }
+}
+
 }
